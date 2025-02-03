@@ -3,11 +3,15 @@
  * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
  */
 
+import { DarkTheme, DefaultTheme } from "@react-navigation/native";
+
 const tintColorLight = '#0a7ea4';
 const tintColorDark = '#fff';
 
-export const Colors = {
-  light: {
+export const LightColorTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
     text: '#11181C',
     background: '#fff',
     tint: tintColorLight,
@@ -15,7 +19,12 @@ export const Colors = {
     tabIconDefault: '#687076',
     tabIconSelected: tintColorLight,
   },
-  dark: {
+  
+};
+export const DarkColorTheme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
     text: '#ECEDEE',
     background: '#151718',
     tint: tintColorDark,
@@ -23,4 +32,5 @@ export const Colors = {
     tabIconDefault: '#9BA1A6',
     tabIconSelected: tintColorDark,
   },
+  
 };
