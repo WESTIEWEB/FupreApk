@@ -1,7 +1,7 @@
 import zustand from 'zustand';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { persist, createJSONStorage } from 'zustand/middleware'
-import UserModel from '../model/user.model';
+import { UserModel } from '@/model/user.model';
 
 interface AppState {
     user: UserModel | null;

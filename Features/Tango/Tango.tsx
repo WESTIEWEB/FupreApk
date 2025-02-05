@@ -8,13 +8,13 @@ import { ThemedView } from '@/components/ThemedView';
 import { ThemedButton } from '@/components/ThemedButton';
 import { DefaultTheme, useNavigation, useTheme } from '@react-navigation/native';
 import { DarkColorTheme } from '@/constants/Colors';
-import useHomeServer from './useHomeServer';
 import { AssetData } from '@/Interface/assetInterface';
 import { ResponseModel } from '@/model/response.model';
 import { dashItems } from '../Dashboard/Dashboard';
+import useHomeServer from '../Home/useHomeServer';
 
 
-const Home = () => {
+const Tango = () => {
   const [permission, requestPermission] = useCameraPermissions();
   const [loading, setLoading] = useState(false);
   const [scanned, setScanned] = useState(false);
@@ -26,31 +26,15 @@ const Home = () => {
 
   const colorTheme = useTheme();
     const color = colorTheme.dark ? DarkColorTheme.colors.text : DefaultTheme.colors.text;
-    const plaeholder = colorTheme.dark ? DarkColorTheme.colors.border : 'grayFUPRE/ST/FF/009';
+    const plaeholder = colorTheme.dark ? DarkColorTheme.colors.border : 'FUPRE/ST/FF/.Ex';
     const background = colorTheme.dark ? DarkColorTheme.colors.background : DefaultTheme.colors.background;
 
-  if (!permission) {
-    return <View />;
-  }
 
-  if (!permission.granted) {
-    return (
-      <ThemedView style={styles.container}>
-        <ThemedText style={styles.message}>We need your permission to show the camera</ThemedText>
-        <Button onPress={requestPermission} title="Grant Permission" />
-      </ThemedView>
-    );
-  }
-
-  const handleBarCodeScanned = (result: BarcodeScanningResult) => {
-    if (!scanned) {
-      setScanned(true);
-      // setTagno(result);
-      fetchTagDetails(result.data);
-    }
-  };
 
   const fetchTagDetails = async (tag: string) => {
+    if(!tag) {
+        return
+    }
     setLoading(true)
     try {
       
@@ -71,21 +55,31 @@ const Home = () => {
   };
 
   return (
-    <ParallaxScrollView title='QR Code'>
+    <ParallaxScrollView title='Search Tango'>
       <View >
-
-        <ThemedText >Scan QR Code:</ThemedText>
-        <CameraView
-          style={styles.camera}
-          facing="back"
-          // barcodeScannerSettings={{ barCodeTypes: ['qr', 'ean13', 'code128'] }}
-          barcodeScannerSettings={{
-            barcodeTypes: ["qr"],
-          }}
-          onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
-        />
-
-        {scanned && <Button title="Scan Again" onPress={() => setScanned(false)} />}
+        <ThemedText type='cardText'>Enter Tag Number:</ThemedText>
+        <View style={styles.inputContainer}>
+          <TextInput
+            value={tagno}
+            style={[styles.input, {
+              color
+            }]}
+            placeholderTextColor={plaeholder}
+            onChangeText={setTagno}
+            placeholder="TG-126737" />
+        </View>
+        
+        <ThemedButton disabled={loading} style={{
+          padding: 10,
+          borderRadius: 5,
+          marginBottom: 20
+        }} darkColor='blue' lightColor='green' onPress={() => fetchTagDetails(tagno)}>
+          <ThemedText type='cardText' lightColor='#fff' style={{
+            textAlign: 'center'
+          }}>
+            {loading ? 'Fetching data...' : 'Fetch Details'}
+          </ThemedText>
+        </ThemedButton>
       </View>
     </ParallaxScrollView>
   );
@@ -121,4 +115,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+export default Tango;

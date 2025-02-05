@@ -8,14 +8,17 @@ import { DefaultTheme, useTheme } from '@react-navigation/native';
 import { DarkColorTheme } from '@/constants/Colors';
 import { ThemedButton } from '@/components/ThemedButton';
 import useAppStore from '@/Store/AppStore';
+import loginServer from './loginServer';
+import { ResponseModel } from '@/model/response.model';
 
 type FormData = {
-  email: string;
-  password: string;
+  Email: string;
+  Password: string;
 };
 
 const Login = ({navigation}: {navigation: any}) => {
   const [secureText, setSecureText] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { setUser } = useAppStore();
   const colorTheme = useTheme();
   const color = colorTheme.dark ? DarkColorTheme.colors.text : DefaultTheme.colors.text;
@@ -23,15 +26,45 @@ const Login = ({navigation}: {navigation: any}) => {
 
   const { control, handleSubmit, formState: { errors } } = useForm<FormData>();
 
-  const onSubmit = (data: FormData) => {
-    setUser({
-      email: data.email,
-      name: data.email,
-      id: '34'
-    })
-    Alert.alert("Success", "You are logged in!");
+  const { login } = loginServer();
 
-    navigation.navigate('Home'); // Uncomment if you have a Home screen
+  const onSubmit = async(data: FormData) => {
+    // setUser({
+    //   email: data.email,
+    //   name: data.email,
+    //   id: '34'
+    // })
+    setLoading(true);
+    try {
+      const res = await login(data) as unknown as ResponseModel;
+      console.log(res)
+      if(res.Data) {
+        setUser({
+          Id: res.Data.Id,
+          Email: res.Data.Email,
+          Name: res.Data.Name,
+          IsAdmin: res.Data.IsAdmin,
+          AdminLevel: res.Data.AdminLevel,
+          CurrentSigninId: res.Data.CurrentSigninId,
+          Phone: res.Data.Phone
+        })
+        Alert.alert("Success", "You are logged in!");
+        navigation.navigate('Home');
+      }
+      else {
+        alert(res.Message)
+      }
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+
+
+    return
+
+
+     // Uncomment if you have a Home screen
   };
   return (
     <ParallaxScrollView showHeader={false} >
@@ -47,7 +80,7 @@ const Login = ({navigation}: {navigation: any}) => {
         <Ionicons name="mail-outline" size={22} color="#888" style={styles.icon} />
         <Controller
           control={control}
-          name="email"
+          name="Email"
           rules={{
             required: "Email is required",
             pattern: {
@@ -71,14 +104,14 @@ const Login = ({navigation}: {navigation: any}) => {
           )}
         />
       </View>
-      {errors.email && <ThemedText style={styles.error}>{errors.email.message}</ThemedText>}
+      {errors.Email && <ThemedText style={styles.error}>{errors.Email.message}</ThemedText>}
 
       {/* Password Input */}
       <View style={styles.inputContainer}>
         <Ionicons name="lock-closed-outline" size={22} color="#888" style={styles.icon} />
         <Controller
           control={control}
-          name="password"
+          name="Password"
           rules={{ required: "Password is required", minLength: 6 }}
           render={({ field: { onChange, value } }) => (
             <TextInput
@@ -104,13 +137,13 @@ const Login = ({navigation}: {navigation: any}) => {
           />
         </TouchableOpacity>
       </View>
-      {errors.password && <ThemedText style={styles.error}>Password must be at least 6 characters</ThemedText>}
+      {errors.Password && <ThemedText style={styles.error}>Password must be at least 6 characters</ThemedText>}
 
       {/* Login Button */}
-      <ThemedButton darkColor='#0a7ea4' lightColor='#7367f0' style={[styles.button, {
+      <ThemedButton disabled={loading} darkColor='#0a7ea4' lightColor='#7367f0' style={[styles.button, {
 
       }]} onPress={handleSubmit(onSubmit)}>
-        <ThemedText lightColor='#fff' style={styles.buttonText}>Login</ThemedText>
+        <ThemedText lightColor='#fff' style={styles.buttonText}>{loading ? 'loading ...' : 'Login'}</ThemedText>
       </ThemedButton>
 
       {/* Forgot Password */}
@@ -121,9 +154,9 @@ const Login = ({navigation}: {navigation: any}) => {
       {/* Register Redirect */}
       <View style={styles.registerContainer}>
         <ThemedText type='link' style={styles.registerText}>Don't have an account?</ThemedText>
-        <TouchableOpacity onPress={() => {}}>
+        <ThemedButton onPress={() => {}}>
           <ThemedText type='link' style={styles.registerLink}> Sign up</ThemedText>
-        </TouchableOpacity>
+        </ThemedButton>
       </View>
     </SafeAreaView>
     </ParallaxScrollView>

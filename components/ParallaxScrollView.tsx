@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     gap: 16,
     overflow: 'hidden',
+    backgroundColor: 'transparent',
   },
   back: {
     position: 'absolute',

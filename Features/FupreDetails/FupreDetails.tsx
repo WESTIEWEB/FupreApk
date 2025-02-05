@@ -31,6 +31,22 @@ const FupreDetails: React.FC<TagDetailProps> = ({ route }) => {
     { label: 'Manufacturing Date', value: detail?.MfgDateText, icon: 'calendar' },
     { label: 'Operational Date', value: detail?.AssetOperationalDateText, icon: 'time' },
     { label: 'Created By', value: `${detail?.CreatedByName} (${detail?.CreatedDateText})`, icon: 'person' },
+    // Adding missing columns
+    { label: 'Asset Award Date', value: detail?.AssetAwardDateText, icon: 'calendar' },
+    { label: 'Expected Completion Date', value: detail?.AssetExpectedCompletionDateText, icon: 'calendar' },
+    { label: 'Initial Asset Amount', value: detail?.AssetInitialAssetAmountText, icon: 'cash-outline' },
+    { label: 'Paid Amount', value: detail?.AssetPaidAmountText, icon: 'cash-outline' },
+    { label: 'Total Amount', value: detail?.AssetTotalAmountText, icon: 'cash-outline' },
+    { label: 'Variation Amount', value: detail?.AssetVariationAmountText, icon: 'cash-outline' },
+    { label: 'Depreciation Rate', value: `${detail?.AssetAnnualDepreciateRateText}%`, icon: 'stats-chart' },
+    { label: 'Asset Expiry Date', value: detail?.CalcAssetOperationalExpiryDateText, icon: 'calendar' },
+    { label: 'Net Book Value', value: detail?.CalcAssetNetBookValueText, icon: 'stats-chart' },
+    { label: 'Current Depreciation', value: detail?.CalcAssetCurrentDepreciationText, icon: 'stats-chart' },
+    { label: 'Tagno', value: detail?.Tagno, icon: 'barcode' },
+    { label: 'Remark', value: detail?.Remark, icon: 'information' },
+    { label: 'Product Category', value: detail?.FkProductCategory, icon: 'layers' },
+    { label: 'Import Batchno', value: detail?.ImportBatchno, icon: 'folder' },
+    { label: 'Audit Logs', value: detail?.AuditLogs.length > 0 ? 'Has Logs' : 'No Logs', icon: 'clipboard' },
   ];
 
   return (
@@ -39,7 +55,7 @@ const FupreDetails: React.FC<TagDetailProps> = ({ route }) => {
         {details.map((item, index) => (
           <View style={styles.card} key={index}>
             <View style={styles.iconWrapper}>
-              <Ionicons name={item.icon as any} size={22} color="#4A90E2" />
+              <Ionicons name={item.icon as any} size={22} color="green" />
             </View>
             <View style={styles.textWrapper}>
               <Text style={styles.label}>{item.label}</Text>

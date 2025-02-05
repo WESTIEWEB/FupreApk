@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
   },
   cardText: {
     fontSize: 16,
+    fontWeight: 500,
   },
   link: {
     lineHeight: 30,

@@ -17,11 +17,13 @@ const useHomeServer = () => {
     try {
         const res = await apiService.get(`mobile/scan?tagno=${tagName}`) as any;
         let data = res.data as unknown as ResponseModel;
+
+        console.log(data)
         if(res.data.IsSuccess) {
             return res
         } else {
             return {
-                message: res.Message
+                message: res.data.Message
             }
         }
     } catch (error: any) {

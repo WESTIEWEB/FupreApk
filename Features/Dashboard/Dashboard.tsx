@@ -1,4 +1,4 @@
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -17,14 +17,15 @@ interface DashItemI {
 }
 
 export const dashItems: DashItemI[] = [
-    { name: 'Scan ID', icon: 'qrcode-scan', color: 'black', screen: 'Home' },
-    { name: 'Event', icon: 'calendar', color: 'red', screen: null },
-    { name: 'Attendance', icon: 'checkbox-marked-outline',color: 'blue', screen: null },
+    { name: 'Scan QR', icon: 'qrcode-scan', color: 'black', screen: 'Home' },
+    { name: 'Search Tango', icon: 'archive-search-outline', color: 'red', screen: 'Tango' },
+    // { name: 'Event', icon: 'calendar', color: 'red', screen: null },
+    // { name: 'Attendance', icon: 'checkbox-marked-outline',color: 'blue', screen: null },
     { name: 'Profile', icon: 'face-man-profile', color: 'green', screen: null },
     { name: 'Fees Details', icon: 'currency-usd', color: 'gold', screen: null },
-    { name: 'Grade Sheet', icon: 'file-document-outline', color: 'purple', screen: null },
-    { name: 'Galery', icon: 'currency-usd', color: 'gold', screen: null },
-    { name: 'News', icon: 'file-document-outline', color: 'purple', screen: null },
+    // { name: 'Grade Sheet', icon: 'file-document-outline', color: 'purple', screen: null },
+    // { name: 'Galery', icon: 'currency-usd', color: 'gold', screen: null },
+    // { name: 'News', icon: 'file-document-outline', color: 'purple', screen: null },
 ];
 
 const Dashboard = () => {
@@ -37,8 +38,8 @@ const Dashboard = () => {
       }
     }
     return (
-        <ParallaxScrollView  showHeader={false} title="Dashboard">
-            <ThemedText type="subtitle" style={styles.message}>Student Portal</ThemedText>
+        <ParallaxScrollView lightColor='green'  showHeader={false} title="Dashboard">
+            <ThemedText lightColor='#fff' type="subtitle" style={styles.message}>Fupre Portal</ThemedText>
 
             {/* Grid Layout for Cards */}
             <View style={styles.gridContainer}>
@@ -53,17 +54,15 @@ const Dashboard = () => {
                     </View>
                 ))}
             </View>
-            <ThemedButton onPress={() => {
-                setUser({
-                    id: null,
-                    email: '',
-                    name: ''
-                })
+            <TouchableOpacity style={{
+                marginTop: Sizes.height * 0.2
+            }} onPress={() => {
+                setUser({})
             }}>
-                <ThemedText style={styles.logout}>
+                <ThemedText lightColor='#fff' style={styles.logout}>
                     Logout
                 </ThemedText>
-            </ThemedButton>
+            </TouchableOpacity>
         </ParallaxScrollView>
     );
 };
