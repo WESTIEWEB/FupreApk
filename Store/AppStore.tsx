@@ -5,12 +5,18 @@ import UserModel from '../model/user.model';
 
 interface AppState {
     user: UserModel | null;
+    setTokenExpired: (value: boolean) => void;
+    setUser: (value: UserModel) => void;
+    tokenExpired: boolean;
 }
 
 const useAppStore = zustand.create<AppState>()(
     persist(
         (set) => ({
-            user: null
+            user: null,
+            setTokenExpired: (value: boolean) => set({ tokenExpired: value }),
+            setUser: (value: UserModel | null) => set({ user: value }),
+            tokenExpired: true,
         }),
         {
             name: 'app-store',

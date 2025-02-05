@@ -1,10 +1,11 @@
+import { DarkColorTheme, LightColorTheme } from '@/constants/Colors';
 import { useTheme } from '@react-navigation/native';
 import { Text, type TextProps, StyleSheet } from 'react-native';
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
-  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
+  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link' | 'cardText';
 };
 
 export function ThemedText({
@@ -14,9 +15,8 @@ export function ThemedText({
   type = 'default',
   ...rest
 }: ThemedTextProps) {
-  const { colors } = useTheme();
-  
-  const color = lightColor || darkColor || colors.text;
+  const theme = useTheme();
+  const color = theme.dark ? darkColor || DarkColorTheme.colors.text : lightColor || LightColorTheme.colors.text ;
 
 
   return (
@@ -27,6 +27,7 @@ export function ThemedText({
         type === 'title' ? styles.title : undefined,
         type === 'defaultSemiBold' ? styles.defaultSemiBold : undefined,
         type === 'subtitle' ? styles.subtitle : undefined,
+        type === 'cardText' ? styles.cardText : undefined,
         type === 'link' ? styles.link : undefined,
         style,
       ]}
@@ -53,6 +54,9 @@ const styles = StyleSheet.create({
   subtitle: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  cardText: {
+    fontSize: 16,
   },
   link: {
     lineHeight: 30,
