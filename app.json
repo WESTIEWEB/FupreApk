@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "FupreAssetScanner",
-    "slug": "FupreAssetScanner",
+    "slug": "fupresassetscan",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.westieweb.fupresassetscan"
     },
     "web": {
       "bundler": "metro",
@@ -42,8 +43,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "efff52a0-bd1d-45fe-8d48-0d0aa909c3b6"
+        "projectId": "60207075-a0a4-4e2b-a161-fec360981dae"
       }
-    }
+    },
+    "owner": "westieweb"
   }
 }
