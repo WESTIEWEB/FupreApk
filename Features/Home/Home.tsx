@@ -43,6 +43,7 @@ const Home = () => {
   }
 
   const handleBarCodeScanned = (result: BarcodeScanningResult) => {
+    alert(JSON.stringify(result.data))
     if (!scanned) {
       setScanned(true);
       // setTagno(result);
