@@ -15,6 +15,8 @@ const loginServer = () => {
             Email: data?.Email,
             Password: data.Password
           })
+
+          console.log(res)
           if(res?.data) {
             return res.data
           }

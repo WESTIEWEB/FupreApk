@@ -17,12 +17,12 @@ interface DashItemI {
 }
 
 export const dashItems: DashItemI[] = [
-    { name: 'Scan QR', icon: 'qrcode-scan', color: 'black', screen: 'Home' },
-    { name: 'Search Tango', icon: 'archive-search-outline', color: 'red', screen: 'Tango' },
+    { name: 'Scan QR', icon: 'qrcode-scan', color: 'gold', screen: 'Home' },
+    { name: 'Search Tango', icon: 'archive-search-outline', color: 'green', screen: 'Tango' },
     // { name: 'Event', icon: 'calendar', color: 'red', screen: null },
     // { name: 'Attendance', icon: 'checkbox-marked-outline',color: 'blue', screen: null },
-    { name: 'Profile', icon: 'face-man-profile', color: 'green', screen: null },
-    { name: 'Fees Details', icon: 'currency-usd', color: 'gold', screen: null },
+    // { name: 'Profile', icon: 'face-man-profile', color: 'green', screen: null },
+    // { name: 'Fees Details', icon: 'currency-usd', color: 'gold', screen: null },
     // { name: 'Grade Sheet', icon: 'file-document-outline', color: 'purple', screen: null },
     // { name: 'Galery', icon: 'currency-usd', color: 'gold', screen: null },
     // { name: 'News', icon: 'file-document-outline', color: 'purple', screen: null },
@@ -30,9 +30,10 @@ export const dashItems: DashItemI[] = [
 
 const Dashboard = () => {
     const navigation = useNavigation() as any;
-    const { setUser } = useAppStore();
+    const { setUser, user } = useAppStore();
 
     const handlePress = (item: DashItemI) => {
+        console.log(user)
       if(item.screen) {
         navigation.navigate(item.screen)
       }
@@ -54,7 +55,7 @@ const Dashboard = () => {
                     </View>
                 ))}
             </View>
-            <TouchableOpacity style={{
+            {/* <TouchableOpacity style={{
                 marginTop: Sizes.height * 0.2
             }} onPress={() => {
                 setUser({})
@@ -62,7 +63,7 @@ const Dashboard = () => {
                 <ThemedText lightColor='#fff' style={styles.logout}>
                     Logout
                 </ThemedText>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </ParallaxScrollView>
     );
 };

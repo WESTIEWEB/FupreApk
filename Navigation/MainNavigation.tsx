@@ -5,17 +5,25 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 // Import Screens
 import Dashboard from '@/Features/Dashboard/Dashboard';
+import Profile from '@/Features/Profile/Profile';
+import { useColorScheme } from 'react-native';
+import { DarkColorTheme, LightColorTheme } from '@/constants/Colors';
 
 const Tab = createBottomTabNavigator();
 
 const MainNavigation: React.FC = () => {
+  const colorTheme = useColorScheme();
+
+  const tabBg = colorTheme === 'dark' ? DarkColorTheme.colors.background : LightColorTheme.colors.background;
   return (
       <Tab.Navigator
         initialRouteName="Dashboard"
         screenOptions={{
           headerShown: false,
-          tabBarStyle: { backgroundColor: '#fff', height: 60 },
-          tabBarActiveTintColor: '#7367f0',
+          tabBarStyle: { backgroundColor: tabBg, height: 60 },
+          tabBarActiveTintColor: 'green',
+          tabBarInactiveTintColor: 'gray',
+          tabBarLabelStyle: { fontSize: 12 },
         }}
       >
         <Tab.Screen
@@ -25,6 +33,16 @@ const MainNavigation: React.FC = () => {
             tabBarLabel: 'Home',
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons name="home" color={color} size={32} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Profile"
+          component={Profile}
+          options={{
+            tabBarLabel: 'Profile',
+            tabBarIcon: ({ color }) => (
+              <MaterialCommunityIcons name="face-man-profile" color={color} size={32} />
             ),
           }}
         />

@@ -3,14 +3,13 @@ import React from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { AssetData } from '@/Interface/assetInterface';
 import { RootStackParamList } from '@/App';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
+import ParallaxFlatList from '@/components/ParallaxFlatList';
 import { ThemedView } from '@/components/ThemedView';
-import { ThemedText } from '@/components/ThemedText';
 import { Ionicons } from '@expo/vector-icons';
+import { ThemedText } from '@/components/ThemedText';
 
 type TagDetailRouteProp = RouteProp<RootStackParamList, 'TagDetail'>;
 
-// Props for the component
 interface TagDetailProps {
   route: TagDetailRouteProp;
 }
@@ -21,91 +20,63 @@ const FupreDetails: React.FC<TagDetailProps> = ({ route }) => {
 
   const details = [
     { label: 'Branch Name', value: detail?.BranchName, icon: 'business' },
-    { label: 'Department', value: detail?.DepartmentName, icon: 'briefcase' },
     { label: 'Category', value: detail?.CategoryName, icon: 'layers' },
-    { label: 'Inventory Type', value: detail?.InventoryTypeName, icon: 'cube' },
-    { label: 'Status', value: detail?.EnumStatus, icon: 'alert-circle' },
-    { label: 'Quantity', value: `${detail?.Quantity} ${detail?.Uom}`, icon: 'stats-chart' },
-    { label: 'Cost Price', value: detail?.CostPriceText, icon: 'cash-outline' },
-    { label: 'Sales Price', value: detail?.SalesPriceText, icon: 'pricetag' },
-    { label: 'Manufacturing Date', value: detail?.MfgDateText, icon: 'calendar' },
-    { label: 'Operational Date', value: detail?.AssetOperationalDateText, icon: 'time' },
-    { label: 'Created By', value: `${detail?.CreatedByName} (${detail?.CreatedDateText})`, icon: 'person' },
-    // Adding missing columns
-    { label: 'Asset Award Date', value: detail?.AssetAwardDateText, icon: 'calendar' },
-    { label: 'Expected Completion Date', value: detail?.AssetExpectedCompletionDateText, icon: 'calendar' },
-    { label: 'Initial Asset Amount', value: detail?.AssetInitialAssetAmountText, icon: 'cash-outline' },
+    { label: 'Department', value: detail?.DepartmentName, icon: 'briefcase' },
+    { label: 'Tagno', value: detail?.Tagno, icon: 'barcode' },
     { label: 'Paid Amount', value: detail?.AssetPaidAmountText, icon: 'cash-outline' },
     { label: 'Total Amount', value: detail?.AssetTotalAmountText, icon: 'cash-outline' },
-    { label: 'Variation Amount', value: detail?.AssetVariationAmountText, icon: 'cash-outline' },
     { label: 'Depreciation Rate', value: `${detail?.AssetAnnualDepreciateRateText}%`, icon: 'stats-chart' },
-    { label: 'Asset Expiry Date', value: detail?.CalcAssetOperationalExpiryDateText, icon: 'calendar' },
     { label: 'Net Book Value', value: detail?.CalcAssetNetBookValueText, icon: 'stats-chart' },
-    { label: 'Current Depreciation', value: detail?.CalcAssetCurrentDepreciationText, icon: 'stats-chart' },
-    { label: 'Tagno', value: detail?.Tagno, icon: 'barcode' },
-    { label: 'Remark', value: detail?.Remark, icon: 'information' },
-    { label: 'Product Category', value: detail?.FkProductCategory, icon: 'layers' },
-    { label: 'Import Batchno', value: detail?.ImportBatchno, icon: 'folder' },
-    { label: 'Audit Logs', value: detail?.AuditLogs.length > 0 ? 'Has Logs' : 'No Logs', icon: 'clipboard' },
+    { label: 'Status', value: detail?.EnumStatus, icon: 'alert-circle' },
+    { label: 'Created At', value: detail?.CreatedDateText, icon: 'calendar' },
+    { label: 'Last Modified', value: detail?.LastModifiedDateText, icon: 'calendar' },
   ];
 
   return (
-    <ParallaxScrollView title="Details Page">
-      <ThemedView style={styles.container}>
-        {details.map((item, index) => (
-          <View style={styles.card} key={index}>
-            <View style={styles.iconWrapper}>
-              <Ionicons name={item.icon as any} size={22} color="green" />
-            </View>
-            <View style={styles.textWrapper}>
-              <Text style={styles.label}>{item.label}</Text>
-              <Text style={[styles.value, !item.value ? styles.placeholder : null]}>
-                {item.value || 'N/A'}
-              </Text>
-            </View>
+    <ParallaxFlatList
+      
+      data={details}
+      title="Details Page"
+      renderItem={({ item }) => (
+        <View style={styles.row}>
+          <Ionicons name={item.icon as any} size={20} color="#4CAF50" style={styles.icon} />
+          <View style={styles.textContainer}>
+            <ThemedText lightColor='#777' darkColor='#687076' type="cardText" style={styles.label}>{item.label}</ThemedText>
+            <ThemedText lightColor='#11181C' darkColor='#ECEDEE' type="cardText" style={[styles.value, !item.value ? styles.placeholder : null]}>
+              {item.value || 'N/A'}
+            </ThemedText>
           </View>
-        ))}
-      </ThemedView>
-    </ParallaxScrollView>
+        </View>
+      )}
+      keyExtractor={(_, index) => index.toString()}
+      lightColor="#fff"
+      darkColor="#121212"
+    />
   );
 };
 
 export default FupreDetails;
 
 const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 16,
-    paddingBottom: 20,
-  },
-  card: {
+  row: {
     flexDirection: 'row',
-    backgroundColor: '#fff',
-    padding: 12,
-    borderRadius: 10,
-    marginBottom: 12,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    alignItems: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 16,
   },
-  iconWrapper: {
-    backgroundColor: '#EAF1FF',
-    padding: 10,
-    borderRadius: 50,
+  icon: {
     marginRight: 12,
   },
-  textWrapper: {
+  textContainer: {
     flex: 1,
   },
   label: {
     fontSize: 14,
-    color: '#777',
     fontWeight: '500',
   },
   value: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#333',
   },
   placeholder: {
     color: '#999',

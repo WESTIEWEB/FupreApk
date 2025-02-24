@@ -80,7 +80,7 @@ const Home = () => {
           facing="back"
           // barcodeScannerSettings={{ barCodeTypes: ['qr', 'ean13', 'code128'] }}
           barcodeScannerSettings={{
-            barcodeTypes: ["qr"],
+            barcodeTypes: ["qr", "ean13", "code128"],
           }}
           onBarcodeScanned={scanned ? undefined : handleBarCodeScanned}
         />
