@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     paddingVertical: 12,
-    marginTop: Sizes.height * 0.2,
+    marginTop: Sizes.height * 0.2 -20,
     color: '#D32F2F',
   },
 
