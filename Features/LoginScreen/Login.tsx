@@ -24,7 +24,7 @@ const Login = ({navigation}: {navigation: any}) => {
   const color = colorTheme.dark ? DarkColorTheme.colors.text : DefaultTheme.colors.text;
   const background = colorTheme.dark ? DarkColorTheme.colors.background : DefaultTheme.colors.background;
 
-  const { control, handleSubmit, formState: { errors } } = useForm<FormData>();
+  const { control, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormData>();
 
   const { login } = loginServer();
 
@@ -37,7 +37,6 @@ const Login = ({navigation}: {navigation: any}) => {
     setLoading(true);
     try {
       const res = await login(data) as unknown as ResponseModel;
-      console.log(res)
       if(res.Data) {
         setUser({
           Id: res.Data.Id,
@@ -47,9 +46,10 @@ const Login = ({navigation}: {navigation: any}) => {
           AdminLevel: res.Data.AdminLevel,
           CurrentSigninId: res.Data.CurrentSigninId,
           Phone: res.Data.Phone
-        })
+        });
+
         Alert.alert("Success", "You are logged in!");
-        navigation.navigate('Home');
+        setValue('Password', '');
       }
       else {
         alert(res.Message)
@@ -140,7 +140,7 @@ const Login = ({navigation}: {navigation: any}) => {
       {errors.Password && <ThemedText style={styles.error}>Password must be at least 6 characters</ThemedText>}
 
       {/* Login Button */}
-      <ThemedButton disabled={loading} darkColor='#0a7ea4' lightColor='#7367f0' style={[styles.button, {
+      <ThemedButton disabled={loading} darkColor='#48C9F2' lightColor='#48C9F2' style={[styles.button, {
 
       }]} onPress={handleSubmit(onSubmit)}>
         <ThemedText lightColor='#fff' style={styles.buttonText}>{loading ? 'loading ...' : 'Login'}</ThemedText>

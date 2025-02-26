@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect, useState, useRef } from 'react';
-import { useColorScheme, AppState } from 'react-native'; // Import AppStateSubscription
+import { useColorScheme, AppState, StatusBar } from 'react-native'; // Import AppStateSubscription
 import * as SplashScreen from 'expo-splash-screen';
 import * as Font from 'expo-font';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
@@ -13,7 +13,6 @@ import Home from './Features/Home/Home';
 import useAppStore from './Store/AppStore';
 import { DarkColorTheme, LightColorTheme } from './constants/Colors';
 import Onboarding from './Features/Onboarding/Onboarding';
-import Dashboard from './Features/Dashboard/Dashboard';
 import FupreDetails from './Features/FupreDetails/FupreDetails';
 import { ResponseModel } from './model/response.model';
 import MainNavigation from './Navigation/MainNavigation';
@@ -141,6 +140,10 @@ export default function App() {
 
   return (
     <NavigationContainer theme={colorTheme === 'dark' ? DarkColorTheme : LightColorTheme}>
+      <StatusBar
+        backgroundColor={colorTheme === 'dark' ? DarkColorTheme.colors.background : '#90D9FA'}
+        barStyle={colorTheme === 'dark' ? 'light-content' : 'dark-content'}
+      />
       <MainScreen />
     </NavigationContainer>
   );

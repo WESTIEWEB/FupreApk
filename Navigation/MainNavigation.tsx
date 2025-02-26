@@ -14,15 +14,15 @@ const Tab = createBottomTabNavigator();
 const MainNavigation: React.FC = () => {
   const colorTheme = useColorScheme();
 
-  const tabBg = colorTheme === 'dark' ? DarkColorTheme.colors.background : LightColorTheme.colors.background;
+  const tabBg = colorTheme === 'dark' ? DarkColorTheme.colors.background : '#90D9FA';
   return (
       <Tab.Navigator
         initialRouteName="Dashboard"
         screenOptions={{
           headerShown: false,
-          tabBarStyle: { backgroundColor: tabBg, height: 60 },
-          tabBarActiveTintColor: 'green',
-          tabBarInactiveTintColor: 'gray',
+          tabBarStyle: { backgroundColor: tabBg, height: 60, },
+          tabBarActiveTintColor: 'black',
+          tabBarInactiveTintColor: '#ECEDEE',
           tabBarLabelStyle: { fontSize: 12 },
         }}
       >
@@ -30,6 +30,7 @@ const MainNavigation: React.FC = () => {
           name="Dashboard"
           component={Dashboard}
           options={{
+            headerPressOpacity: 1,
             tabBarLabel: 'Home',
             tabBarIcon: ({ color }) => (
               <MaterialCommunityIcons name="home" color={color} size={32} />

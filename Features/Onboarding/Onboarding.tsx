@@ -23,14 +23,10 @@ const Onboarding: React.FC = () => {
   return (
     <ParallaxScrollView showHeader={false}  >
         <View style={{flex: 1, height: Sizes.height * 0.8}}>
-            <ThemedText style={[styles.getStarted, {
-                textAlign: 'right'
-            }]} type='subtitle'>
-                    Fupre
-            </ThemedText>
-            <LottieView
-            style={{width: '100%', height: Sizes.height * 0.6}}
-            source={require('@/assets/lotties/getstarted.json')}/>
+            <Image
+            style={{width: '100%', height: '90%', borderRadius: 20, backgroundColor: 'transparent' }}
+            resizeMode='contain'
+            source={require('@/assets/images/getStarted.jpg')}/>
             <View style={styles.iconContainer}>
                 <ThemedText style={styles.getStarted} type='subtitle'>
                     Lets Get You Started

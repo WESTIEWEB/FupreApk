@@ -16,7 +16,6 @@ const loginServer = () => {
             Password: data.Password
           })
 
-          console.log(res)
           if(res?.data) {
             return res.data
           }

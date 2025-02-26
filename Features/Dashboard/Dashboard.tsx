@@ -1,13 +1,14 @@
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity, StatusBar, useColorScheme } from 'react-native';
 import React from 'react';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import ThemedCard from '@/components/ThemedCard';
 import Sizes from '@/constants/Sizes';
-import { useNavigation } from '@react-navigation/native';
+import { DefaultTheme, useNavigation } from '@react-navigation/native';
 import { ThemedButton } from '@/components/ThemedButton';
 import useAppStore from '@/Store/AppStore';
+import { DarkColorTheme, LightColorTheme } from '@/constants/Colors';
 
 interface DashItemI {
   name: string;
@@ -32,6 +33,10 @@ const Dashboard = () => {
     const navigation = useNavigation() as any;
     const { setUser, user } = useAppStore();
 
+    const colorTheme = useColorScheme();
+      const color = colorTheme === 'dark' ? DarkColorTheme.colors.text : LightColorTheme.colors.text
+      const background = colorTheme === 'dark' ? DarkColorTheme.colors.background : DefaultTheme.colors.background;
+
     const handlePress = (item: DashItemI) => {
         console.log(user)
       if(item.screen) {
@@ -39,8 +44,12 @@ const Dashboard = () => {
       }
     }
     return (
-        <ParallaxScrollView lightColor='green'  showHeader={false} title="Dashboard">
-            <ThemedText lightColor='#fff' type="subtitle" style={styles.message}>Fupre Portal</ThemedText>
+        <ParallaxScrollView lightColor='#90D9FA'  showHeader={false} title="Dashboard">
+            <StatusBar
+                      backgroundColor={colorTheme === 'dark' ? DarkColorTheme.colors.background : '#90D9FA'}
+                      barStyle={colorTheme === 'dark' ? 'light-content' : 'dark-content'}
+                  />
+            <ThemedText lightColor='black' type="subtitle" style={styles.message}>Fupre Portal</ThemedText>
 
             {/* Grid Layout for Cards */}
             <View style={styles.gridContainer}>

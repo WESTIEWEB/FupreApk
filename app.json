@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "FupreAssetScanner",
-    "slug": "fupresassetscan",
+    "slug": "fupre",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -43,9 +43,9 @@
         "origin": false
       },
       "eas": {
-        "projectId": "60207075-a0a4-4e2b-a161-fec360981dae"
+        "projectId": "106da4c0-688b-4af8-8223-ada66ef772c2"
       }
     },
-    "owner": "westieweb"
+    "owner": "chibuikeb1"
   }
 }

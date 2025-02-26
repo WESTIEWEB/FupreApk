@@ -1,10 +1,10 @@
-import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Modal } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, TouchableOpacity, Modal, StatusBar, useColorScheme } from 'react-native';
 import React, { useState } from 'react';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { DefaultTheme, useTheme } from '@react-navigation/native';
-import { DarkColorTheme } from '@/constants/Colors';
+import { DarkColorTheme, LightColorTheme } from '@/constants/Colors';
 import useAppStore from '@/Store/AppStore';
 import { Ionicons } from '@expo/vector-icons';
 import LottieView from 'lottie-react-native';
@@ -14,9 +14,9 @@ const Profile = () => {
   const { user, logout } = useAppStore();
   const [modalVisible, setModalVisible] = useState(false);
 
-  const colorTheme = useTheme();
-  const color = colorTheme.dark ? DarkColorTheme.colors.text : DefaultTheme.colors.text;
-  const background = colorTheme.dark ? DarkColorTheme.colors.background : DefaultTheme.colors.background;
+  const colorTheme = useColorScheme();
+  const color = colorTheme === 'dark' ? DarkColorTheme.colors.text : LightColorTheme.colors.text
+  const background = colorTheme === 'dark' ? DarkColorTheme.colors.background : DefaultTheme.colors.background;
 
   const userDetails = [
     { label: 'Name', value: user?.Name, icon: 'person' },
@@ -34,7 +34,7 @@ const Profile = () => {
   };
 
   return (
-    <ParallaxScrollView title="Profile">
+    <ParallaxScrollView  title="Profile">
       <ScrollView contentContainerStyle={styles.container}>
         {/* Profile Image Section */}
         <View style={styles.avatarContainer}>
@@ -42,7 +42,7 @@ const Profile = () => {
         </View>
 
         {/* Profile Details */}
-        <ThemedView lightColor={background} darkColor={background} style={styles.profileCard}>
+        <ThemedView  darkColor={background} style={styles.profileCard}>
           {userDetails.map((item, index) => (
             <View key={index} style={styles.row}>
               <Ionicons name={item.icon as any} size={20} color="#4CAF50" style={styles.icon} />
@@ -97,11 +97,12 @@ const styles = StyleSheet.create({
   },
   profileCard: {
     borderRadius: 12,
-    shadowColor: '#000',
+    // shadowColor: '#000',
+    backgroundColor: 'transparent',
     shadowOpacity: 0.1,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 4,
-    elevation: 3,
+    // elevation: 1,
   },
   row: {
     flexDirection: 'row',
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     paddingVertical: 12,
-    marginTop: Sizes.height * 0.2 -20,
+    marginTop: Sizes.height * 0.1,
     color: '#D32F2F',
   },
 
